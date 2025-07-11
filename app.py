@@ -235,7 +235,7 @@ elif section == "Turnover by Reason":
         st.markdown("""
         ✅ Conclusion:
 This heatmap reveals seasonal patterns in employee resignation behavior.
- June and November experience spikes in resignations, often due to personal/social motives and better job offers.
+June and November experience spikes in resignations, often due to personal/social motives and better job offers.
 HR departments can:
 Prepare retention strategies before these peak months.
 Schedule job postings and succession planning accordingly.
@@ -258,8 +258,6 @@ Investigate deeper causes during high-turnover seasons for policy updates.""")
         )
         fig_gender.update_layout(xaxis_tickangle=-45)
         st.plotly_chart(fig_gender, use_container_width=True)
-    else:
-        st.warning("⚠️ Missing columns: 'turnover_reason' or 'gender'.")
         st.markdown("""
         ✅ Conclusion:
 This chart highlights that turnover motivations vary significantly by gender:
@@ -269,6 +267,8 @@ Male turnover is career-driven, indicating a higher sensitivity to job offers or
 For female employees, consider flexible policies, wellness programs, and work-life balance.
 For male employees, focus on growth paths, salary reviews, and job enrichment.""")
 
+    else:
+        st.warning("⚠️ Missing columns: 'turnover_reason' or 'gender'.")
     # --- Chart 3: By Age Group ---
     st.markdown("### 👶👵 Turnover Reasons by Age Group")
     if 'turnover_reason' in df.columns and 'age_group' in df.columns:
@@ -282,16 +282,17 @@ For male employees, focus on growth paths, salary reviews, and job enrichment.""
             title="Top Causes of Turnover by Age Group"
         )
         st.plotly_chart(fig_age, use_container_width=True)
+        st.markdown("""✅ Conclusion:
+               Turnover is heavily concentrated among younger employees, especially those under 35, due to social needs and career advancement.
+                Retention efforts should focus on the 25–34 age group, offering:
+               Career development paths
+             Social belonging initiatives
+              Work-life flexibility
+O             older employees are more stable, indicating long-term loyalty, possibly due to nearing retirement or job security needs.""")
+
     else:
         st.warning("⚠️ Missing columns: 'turnover_reason' or 'age_group'.")
-        st.markdown("""✅ Conclusion:
-Turnover is heavily concentrated among younger employees, especially those under 35, due to social needs and career advancement.
-Retention efforts should focus on the 25–34 age group, offering:
-Career development paths
-Social belonging initiatives
-Work-life flexibility
-Older employees are more stable, indicating long-term loyalty, possibly due to nearing retirement or job security needs.""")
-
+        
         
     # --- Chart 4: By Department ---
     st.markdown("### 🏢 Turnover Reasons by Department")
@@ -306,8 +307,6 @@ Older employees are more stable, indicating long-term loyalty, possibly due to n
             title="Top Causes of Turnover by Department"
         )
         st.plotly_chart(fig_dept, use_container_width=True)
-    else:
-        st.warning("⚠️ Missing columns: 'turnover_reason' or 'department'.")
         st.markdown("""✅ Conclusion:
     
 Nursing staff turnover is a critical issue, likely due to emotional exhaustion, job stress, or better external offers. 
@@ -319,6 +318,9 @@ Other departments show standard attrition due to personal and professional motiv
 HR should prioritize Nursing, followed by Allied Medical and General, when designing targeted employee engagement or retention plans.
 📌 Recommendation: Conduct internal surveys in the Nursing unit to understand burnout and relocation factors, then act on improving satisfaction and retention.""")
 
+    else:
+        st.warning("⚠️ Missing columns: 'turnover_reason' or 'department'.")
+        
 elif section == "Age & Department Insights":
     st.markdown("## 📈 Age & Department Insights")
     df.columns = df.columns.str.strip().str.lower().str.replace(" ", "_")
@@ -340,15 +342,15 @@ elif section == "Age & Department Insights":
         title="Distribution of Age by Department",
         labels={"age": "Employee Age", "department": "Department"},
     )
+    fig_age_dept.update_layout(showlegend=False, xaxis_tickangle=-45)
+    st.plotly_chart(fig_age_dept, use_container_width=True)
     st.markdown("""✅ Conclusion:
    
 Nursing and Allied Medical teams are relatively younger, which aligns with the higher turnover we saw earlier (younger employees tend to explore more job opportunities).
 Older age in HR and Engineering/IT suggests greater job stability, likely tied to experience and career development.
 Retention programs in Nursing/Medical should consider mentorship, career path clarity, and early engagement strategies for younger employees.
 📌 Recommendation: Tailor retention strategies by department age profiles — offer growth and stability to young teams, and recognition and flexibility to older ones.""")
-    fig_age_dept.update_layout(showlegend=False, xaxis_tickangle=-45)
-    st.plotly_chart(fig_age_dept, use_container_width=True)
-
+    
     # -------------------------
     # 2. Interactive Bar Chart: Average Age by Reason for Leaving
     # -------------------------
@@ -368,8 +370,6 @@ Retention programs in Nursing/Medical should consider mentorship, career path cl
         )
         fig_avg_age_reason.update_layout(xaxis_tickangle=-45)
         st.plotly_chart(fig_avg_age_reason, use_container_width=True)
-    else:
-        st.warning("🚨 Column 'turnover_reason' not found in the dataset.")
         st.markdown("""✅ Conclusion:
     
 Younger employees leave for education, stress, or relocation, while older employees leave due to transfers or strategic reasons.
@@ -378,6 +378,9 @@ Offer flexible study leave for <25 age group.
 Investigate internal transfer policies — ensure smooth transitions and team restructuring.
 Improve workplace conditions (hours, conflict resolution) to retain younger staff.""")
 
+    else:
+        st.warning("🚨 Column 'turnover_reason' not found in the dataset.")
+        
 
 elif section == "Download Data":
     st.subheader("📁 Download Cleaned HR Data")
